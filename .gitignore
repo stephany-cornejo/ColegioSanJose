@@ -1,0 +1,49 @@
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Build results
+[Bb]in/
+[Oo]bj/
+
+# Rider
+.idea/
+
+# User-specific files
+*.rsuser
+*.suo
+*.user
+*.userprefs
+
+# NuGet
+*.nupkg
+# The packages folder can be ignored because of Package Restore
+**/packages/*
+!**/packages/build/
+
+# ASP.NET Scaffolding
+ScaffoldedFiles/
+
+# DotNet
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# VS Code
+.vscode/
+
+# Local DB
+*.mdf
+*.ldf
+
+# Logs
+*.log
+
+# Publish
+*.publishsettings
+
+# Rider caches
+.idea/
