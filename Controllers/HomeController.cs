@@ -2,8 +2,6 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using SanJoseEstudiantes.Models;
 using SanJoseEstudiantes.Models.DB; 
-using SanJoseEstudiantes.Models.ViewModels;
-using Microsoft.EntityFrameworkCore;
 
 namespace SanJoseEstudiantes.Controllers
 {
