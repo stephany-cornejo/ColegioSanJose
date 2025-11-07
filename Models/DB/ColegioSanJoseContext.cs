@@ -70,7 +70,6 @@ public partial class ColegioSanJoseContext : DbContext
         {
             entity.HasKey(e => e.MateriaId).HasName("PK__Materia__0D019DE1BC715C3E");
 
-            // Ensure the C# class maps to the actual table name in the database
             entity.ToTable("Materia");
 
             entity.Property(e => e.Docente)

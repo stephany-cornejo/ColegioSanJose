@@ -23,17 +23,55 @@ namespace SanJoseEstudiantes.Controllers
                        select new Expediente
                        
                        {
-
-                            ExtpedienteId = t.ExtpedienteId,
-                            Alumno = t.Alumno,
-                            Materia = t.Materia,
-                            NotaFinal = t.NotaFinal,
-                            Observaciones = t.Observaciones
-                            
+                           ExtpedienteId = t.ExtpedienteId,
+                           Alumno = new Alumno { Nombre = t.Alumno.Nombre + " " + t.Alumno.Apellido},
+                           Materia = new Materium { NombreMateria = t.Materia.NombreMateria },
+                           NotaFinal = t.NotaFinal,
+                           Observaciones = t.Observaciones
                        }).ToList();
 
             }
             return View(off);
+        }
+
+        public ActionResult Nuevo()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Nuevo(NuevoViewModel model)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    using (ColegioSanJoseContext db = new ColegioSanJoseContext())
+                    {
+                        var viewnew = new Expediente();
+
+                        viewnew.Alumno.Nombre = model.Alumno.Nombre;
+                        viewnew.Alumno.Apellido = model.Alumno.Apellido;
+                        viewnew.Alumno.Grado = model.Alumno.Grado;
+                        viewnew.Alumno.FechaNacimiento = model.Alumno.FechaNacimiento;
+                        viewnew.Materia.NombreMateria = model.Materia.NombreMateria;
+                        viewnew.Materia.Docente = model.Materia.Docente;
+                        viewnew.NotaFinal = model.NotaFinal;
+                        viewnew.Observaciones = model.Observaciones;
+
+
+                        db.Expedientes.Add(viewnew);
+                        db.SaveChanges();
+                    }
+                    return Redirect("/");
+                }
+
+                return View(model);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
         public IActionResult Privacy()
