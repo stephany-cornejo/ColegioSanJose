@@ -131,6 +131,27 @@ namespace SanJoseEstudiantes.Controllers
             }
         }
 
+        [HttpGet]
+        public IActionResult Eliminar(int d)
+        {
+            Expediente model = new Expediente();
+
+            using (ColegioSanJoseContext db = new ColegioSanJoseContext())
+            {
+                try
+                {
+                    var oTabla = db.Expedientes.Find(d);
+                    db.Expedientes.Remove(oTabla);
+                    db.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception(ex.Message);
+                }
+            }
+            return Redirect("/Home/");
+        }
+
         public IActionResult Privacy()
         {
             return View();
