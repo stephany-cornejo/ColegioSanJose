@@ -94,6 +94,43 @@ namespace SanJoseEstudiantes.Controllers
             return View(model);
         }
 
+        [HttpPost]
+        public IActionResult Actualizar(nuevoViewModel model)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    using (ColegioSanJoseContext db = new ColegioSanJoseContext())
+                    {
+                        var viewnew = new Expediente();
+
+                        viewnew.ExtpedienteId = model.ExtpedienteId;
+                        viewnew.Alumno.Nombre = model.Alumno.Nombre;
+                        viewnew.Alumno.Apellido = model.Alumno.Apellido;
+                        viewnew.Alumno.Grado = model.Alumno.Grado;
+                        viewnew.Alumno.FechaNacimiento = model.Alumno.FechaNacimiento;
+                        viewnew.Materia.NombreMateria = model.Materia.NombreMateria;
+                        viewnew.Materia.Docente = model.Materia.Docente;
+                        viewnew.NotaFinal = model.NotaFinal;
+                        viewnew.Observaciones = model.Observaciones;
+
+                        db.Entry(viewnew).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                        db.SaveChanges();
+                    }
+
+                    return Redirect("/Home/");
+                }
+
+                return View(model);
+            }
+
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
         public IActionResult Privacy()
         {
             return View();
