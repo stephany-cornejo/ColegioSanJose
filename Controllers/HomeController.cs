@@ -16,7 +16,24 @@ namespace SanJoseEstudiantes.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            List<Expediente> off = new List<Expediente>();
+            using (var bd = new Models.DB.ColegioSanJoseContext())
+            {
+                off = (from t in bd.Expedientes
+                       select new Expediente
+                       
+                       {
+
+                            ExtpedienteId = t.ExtpedienteId,
+                            Alumno = t.Alumno,
+                            Materia = t.Materia,
+                            NotaFinal = t.NotaFinal,
+                            Observaciones = t.Observaciones
+                            
+                       }).ToList();
+
+            }
+            return View(off);
         }
 
         public IActionResult Privacy()
