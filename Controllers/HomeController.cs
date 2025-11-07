@@ -74,6 +74,26 @@ namespace SanJoseEstudiantes.Controllers
             }
         }
 
+        public IActionResult Editar(int id)
+        {
+            Expediente model = new Expediente();
+
+            using (ColegioSanJoseContext db = new ColegioSanJoseContext())
+            {
+                var oTabla = db.Expedientes.Find(id);
+                model.ExtpedienteId = oTabla.ExtpedienteId;
+                model.Alumno.Nombre = oTabla.Alumno.Nombre;
+                model.Alumno.Apellido = oTabla.Alumno.Apellido;
+                model.Alumno.Grado = oTabla.Alumno.Grado;
+                model.Alumno.FechaNacimiento = oTabla.Alumno.FechaNacimiento;
+                model.Materia.NombreMateria = oTabla.Materia.NombreMateria;
+                model.Materia.Docente = oTabla.Materia.Docente;
+                model.NotaFinal = oTabla.NotaFinal;
+                model.Observaciones = oTabla.Observaciones;
+            }
+            return View(model);
+        }
+
         public IActionResult Privacy()
         {
             return View();
