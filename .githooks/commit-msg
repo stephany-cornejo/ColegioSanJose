@@ -1,0 +1,14 @@
+#!/bin/sh
+# Commit-msg hook to remove GitHub Copilot attribution lines from commit messages.
+# Install by running: git config core.hooksPath .githooks
+
+MSG_FILE="$1"
+[ -z "$MSG_FILE" ] && exit 0
+
+# Remove lines containing Copilot Co-authored-by (case-insensitive)
+if command -v grep >/dev/null2>&1; then
+	grep -v -i -E 'Co-?authored-?by:.*(GitHub[[:space:]]+)?Copilot' "$MSG_FILE" > "${MSG_FILE}.tmp" || true
+	mv "${MSG_FILE}.tmp" "$MSG_FILE" || true
+fi
+
+exit 0
