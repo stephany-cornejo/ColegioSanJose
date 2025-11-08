@@ -1,8 +1,47 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model List<SanJoseEstudiantes.Models.DB.Expediente>
+
+@{
+    ViewData["Title"] = "Expedientes";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<h1>Expedientes</h1>
+
+<div class="row">
+    <div class="col-md-12">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">ID Expediente</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Apellido</th>
+                    <th scope="col">Materia</th>
+                    <th scope="col">Nota final</th>
+                    <th scope="col">Observaciones</th>
+                    <th scope="col">Editar</th>
+                    <th scope="col">Eliminar</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var expediente in Model)
+
+                {
+                    <tr>
+                        <td>@expediente.ExtpedienteId</td>
+                        <td>@expediente.Alumno?.Nombre</td>
+                        <td>@expediente.Alumno?.Apellido</td>
+                        <td>@expediente.Materia?.NombreMateria</td>
+                        <td>@expediente.NotaFinal</td>
+                        <td>@expediente.Observaciones</td>
+                        <td>
+                            <a asp-action="Editar" asp-route-id="@expediente.ExtpedienteId">Editar</a>
+                        </td>
+                        <td>
+                            <a asp-action="Eliminar" asp-route-id="@expediente.ExtpedienteId">Eliminar</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table> 
+    </div>
 </div>
