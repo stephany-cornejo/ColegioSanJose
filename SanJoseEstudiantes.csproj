@@ -19,4 +19,8 @@
     <Folder Include="Models\DB\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include=".githooks\commit-msg" />
+  </ItemGroup>
+
 </Project>

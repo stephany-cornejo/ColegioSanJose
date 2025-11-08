@@ -4,6 +4,7 @@ using SanJoseEstudiantes.Models;
 using SanJoseEstudiantes.Models.DB;
 using SanJoseEstudiantes.Models.ViewModels;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace SanJoseEstudiantes.Controllers
 {
@@ -38,11 +39,20 @@ namespace SanJoseEstudiantes.Controllers
 
         public ActionResult Nuevo()
         {
+            
+            using (var db = new ColegioSanJoseContext())
+            {
+                var alumnos = db.Alumnos.Select(a => new { a.AlumnoId, Name = a.Nombre + " " + a.Apellido }).ToList();
+                var materias = db.Materia.Select(m => new { m.MateriaId, m.NombreMateria }).ToList();
+
+                ViewBag.Alumnos = new SelectList(alumnos, "AlumnoId", "Name");
+                ViewBag.Materias = new SelectList(materias, "MateriaId", "NombreMateria");
+            }
             return View();
         }
 
         [HttpPost]
-        public ActionResult Nuevo(NuevoViewModel model)
+        public ActionResult Nuevo(ExpedienteCreateViewModel model)
         {
             try
             {
@@ -50,31 +60,19 @@ namespace SanJoseEstudiantes.Controllers
                 {
                     using (ColegioSanJoseContext db = new ColegioSanJoseContext())
                     {
-                        var viewnew = new Expediente
+                        var expediente = new Expediente
                         {
-                            Alumno = new Alumno
-                            {
-                                Nombre = model.Alumno.Nombre,
-                                Apellido = model.Alumno.Apellido,
-                                Grado = model.Alumno.Grado,
-                                FechaNacimiento = model.Alumno.FechaNacimiento
-                            },
-                            Materia = new Materium
-                            {
-                                NombreMateria = model.Materia.NombreMateria,
-                                Docente = model.Materia.Docente
-                            },
+                            AlumnoId = model.AlumnoId,
+                            MateriaId = model.MateriaId,
                             NotaFinal = model.NotaFinal,
                             Observaciones = model.Observaciones
                         };
 
-                        db.Expedientes.Add(viewnew);
+                        db.Expedientes.Add(expediente);
                         db.SaveChanges();
-                    }
-                    return Redirect("/");
+                    } 
                 }
-
-                return View(model);
+                return RedirectToAction("Index");
             }
             catch (Exception ex)
             {
