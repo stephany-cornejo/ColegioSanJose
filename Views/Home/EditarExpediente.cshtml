@@ -1,0 +1,26 @@
+@model SanJoseEstudiantes.Models.DB.Expediente
+@{
+ ViewData["Title"] = "Editar Expediente";
+}
+<h1>Editar Expediente</h1>
+@using (Html.BeginForm("Actualizar", "Home", FormMethod.Post))
+{
+ @Html.HiddenFor(m => m.ExtpedienteId)
+ <div class="form-group">
+ @Html.Label("Alumno")
+ <input class="form-control" value="@Model.Alumno?.Nombre @Model.Alumno?.Apellido" disabled />
+ </div>
+ <div class="form-group">
+ @Html.Label("Materia")
+ <input class="form-control" value="@Model.Materia?.NombreMateria" disabled />
+ </div>
+ <div class="form-group">
+ @Html.LabelFor(m => m.NotaFinal)
+ @Html.TextBoxFor(m => m.NotaFinal, new { @class = "form-control", type = "number", step = "0.01", min = "0", max = "10" })
+ </div>
+ <div class="form-group">
+ @Html.LabelFor(m => m.Observaciones)
+ @Html.TextAreaFor(m => m.Observaciones, new { @class = "form-control", rows =3 })
+ </div>
+ <input type="submit" value="Actualizar" class="btn btn-primary" />
+}

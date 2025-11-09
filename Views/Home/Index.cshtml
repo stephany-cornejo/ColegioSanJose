@@ -1,47 +1,43 @@
-﻿@model List<SanJoseEstudiantes.Models.DB.Expediente>
-
+@model IEnumerable<SanJoseEstudiantes.Models.DB.Expediente>
 @{
-    ViewData["Title"] = "Expedientes";
+ ViewData["Title"] = "Expedientes";
 }
-
 <h1>Expedientes</h1>
-
+<p>
+    <a class="btn btn-primary" asp-action="NuevoExpediente" asp-controller="Home">Nuevo Expediente</a>
+</p>
 <div class="row">
-    <div class="col-md-12">
-        <table class="table">
+     <div class="col-md-12">
+         <table class="table">
             <thead>
                 <tr>
-                    <th scope="col">ID Expediente</th>
-                    <th scope="col">Nombre</th>
-                    <th scope="col">Apellido</th>
+                    <th scope="col">Id</th>
+                    <th scope="col">Nombre Completo</th>
                     <th scope="col">Materia</th>
-                    <th scope="col">Nota final</th>
+                    <th scope="col">Nota Final</th>
                     <th scope="col">Observaciones</th>
                     <th scope="col">Editar</th>
                     <th scope="col">Eliminar</th>
                 </tr>
             </thead>
-
             <tbody>
-                @foreach (var expediente in Model)
-
+                @foreach (var d in Model)
                 {
                     <tr>
-                        <td>@expediente.ExtpedienteId</td>
-                        <td>@expediente.Alumno?.Nombre</td>
-                        <td>@expediente.Alumno?.Apellido</td>
-                        <td>@expediente.Materia?.NombreMateria</td>
-                        <td>@expediente.NotaFinal</td>
-                        <td>@expediente.Observaciones</td>
+                        <td>@d.ExtpedienteId</td>
+                        <td>@d.Alumno?.Nombre</td>
+                        <td>@d.Materia?.NombreMateria</td>
+                        <td>@d.NotaFinal</td>
+                        <td>@d.Observaciones</td>
                         <td>
-                            <a asp-action="Editar" asp-route-id="@expediente.ExtpedienteId">Editar</a>
+                            <a class="btn btn-sm btn-secondary" asp-action="Editar" asp-route-id="@d.ExtpedienteId">Editar</a>
                         </td>
                         <td>
-                            <a asp-action="Eliminar" asp-route-id="@expediente.ExtpedienteId">Eliminar</a>
+                            <a class="btn btn-sm btn-danger" asp-action="Eliminar" asp-route-id="@d.ExtpedienteId">Eliminar</a>
                         </td>
                     </tr>
                 }
             </tbody>
-        </table> 
-    </div>
+         </table>
+     </div>
 </div>

@@ -37,7 +37,7 @@ namespace SanJoseEstudiantes.Controllers
             return View(off);
         }
 
-        public ActionResult Nuevo()
+        public ActionResult NuevoExpediente()
         {
             
             using (var db = new ColegioSanJoseContext())
@@ -52,7 +52,7 @@ namespace SanJoseEstudiantes.Controllers
         }
 
         [HttpPost]
-        public ActionResult Nuevo(ExpedienteCreateViewModel model)
+        public ActionResult NuevoExpediente(ExpedienteCreateViewModel model)
         {
             try
             {
@@ -103,11 +103,12 @@ namespace SanJoseEstudiantes.Controllers
                 model.NotaFinal = oTabla.NotaFinal;
                 model.Observaciones = oTabla.Observaciones;
             }
-            return View(model);
+            // return view with explicit name to match renamed view file
+            return View("EditarExpediente", model);
         }
 
         [HttpPost]
-        public IActionResult Actualizar(NuevoViewModel model)
+        public IActionResult Actualizar(Expediente model)
         {
             try
             {
@@ -115,16 +116,11 @@ namespace SanJoseEstudiantes.Controllers
                 {
                     using (ColegioSanJoseContext db = new ColegioSanJoseContext())
                     {
-                        var viewnew = db.Expedientes.Include(e => e.Alumno).Include(e => e.Materia).FirstOrDefault(e => e.ExtpedienteId == model.ExtpedienteId);
+                        var viewnew = db.Expedientes.FirstOrDefault(e => e.ExtpedienteId == model.ExtpedienteId);
 
                         if (viewnew != null)
                         {
-                            viewnew.Alumno.Nombre = model.Alumno.Nombre;
-                            viewnew.Alumno.Apellido = model.Alumno.Apellido;
-                            viewnew.Alumno.Grado = model.Alumno.Grado;
-                            viewnew.Alumno.FechaNacimiento = model.Alumno.FechaNacimiento;
-                            viewnew.Materia.NombreMateria = model.Materia.NombreMateria;
-                            viewnew.Materia.Docente = model.Materia.Docente;
+                            // Only update Expediente fields (do not modify Alumno or Materia entities)
                             viewnew.NotaFinal = model.NotaFinal;
                             viewnew.Observaciones = model.Observaciones;
 
@@ -132,7 +128,7 @@ namespace SanJoseEstudiantes.Controllers
                         }
                     }
 
-                    return Redirect("/Home/");
+                    return RedirectToAction("Index");
                 }
 
                 return View(model);
@@ -174,6 +170,15 @@ namespace SanJoseEstudiantes.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        public IActionResult Estadisticas()
+        {
+            using (var db = new ColegioSanJoseContext())
+            {
+                
+            }
+            return View();
         }
     }
 }
